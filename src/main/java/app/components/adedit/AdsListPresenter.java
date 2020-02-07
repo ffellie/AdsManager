@@ -7,7 +7,6 @@ import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.selection.SelectionEvent;
 import com.vaadin.flow.data.selection.SelectionListener;
 import com.vaadin.flow.spring.annotation.UIScope;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +20,14 @@ import java.util.stream.Collectors;
 @UIScope
 @Getter
 @Setter
-@AllArgsConstructor
 public class AdsListPresenter {
-
-    private final AdService service;
-    private final AdsPageBinder parentPresenter;
+    @Autowired
+    private AdService service;
+    private AdsPageBinder parentPresenter;
 
     private DataProvider<Ad,Void> dataProvider;
     private AdsListView view;
-    void view (AdsListView view){
+    public void view (AdsListView view){
         this.view=view;
         configureGridData();
         view.getAdGrid().addSelectionListener(new SelectionListener<Grid<Ad>, Ad>() {
