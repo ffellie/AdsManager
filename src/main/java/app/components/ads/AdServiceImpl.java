@@ -1,9 +1,7 @@
-package app.components.adedit;
+package app.components.ads;
 
-import app.data.Ad;
-import app.data.AdRepository;
-import com.vaadin.flow.spring.annotation.UIScope;
-import org.springframework.beans.factory.annotation.Autowired;
+import app.data.ad.Ad;
+import app.data.ad.AdRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -13,9 +11,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class AdService {
+public class AdServiceImpl implements  AdService{
     private AdRepository repository;
-    public AdService (AdRepository repository){
+    public AdServiceImpl(AdRepository repository){
         this.repository = repository;
     }
 

@@ -21,7 +21,7 @@ public class MainLayout extends AppLayout implements RouterLayout {
         Image img = new Image("https://i.imgur.com/GPpnszs.png", "Vaadin Logo");
         img.setHeight("44px");
 //        addToNavbar(new DrawerToggle(), img);
-        kioskTab = new Tab("Киоски");
+        kioskTab = new Tab("Группы");
         imageTab = new Tab("Изображения");
         Tabs tabs = new Tabs(kioskTab, imageTab);
         tabs.setOrientation(Tabs.Orientation.HORIZONTAL);
@@ -32,7 +32,7 @@ public class MainLayout extends AppLayout implements RouterLayout {
             @Override
             public void onComponentEvent(Tabs.SelectedChangeEvent selectedChangeEvent) {
                 if(selectedChangeEvent.getSelectedTab()==kioskTab)
-                    getUI().ifPresent(ui -> ui.navigate("kiosks"));
+                    getUI().ifPresent(ui -> ui.navigate("main"));
 //                else if(selectedChangeEvent.getSelectedTab()==imageTab)
 //                    getUI().ifPresent(ui -> ui.navigate("images"));
             }

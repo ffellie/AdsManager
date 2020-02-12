@@ -1,6 +1,6 @@
-package app.routes;
+package app.routes.ads;
 
-import app.components.adedit.AdsPageBinder;
+import app.components.ads.AdsPageBinder;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.stereotype.Component;
 

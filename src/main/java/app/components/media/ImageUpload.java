@@ -1,4 +1,4 @@
-package app.components;
+package app.components.media;
 
 import com.vaadin.flow.component.upload.Receiver;
 import com.vaadin.flow.component.upload.Upload;

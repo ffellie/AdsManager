@@ -1,13 +1,18 @@
-package app.components.adedit;
+package app.components.ads.list;
 
-import app.data.Ad;
+import app.components.ads.AdService;
+import app.components.ads.AdServiceImpl;
+import app.components.ads.AdsPageBinder;
+import app.data.ad.Ad;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.selection.SelectionEvent;
 import com.vaadin.flow.data.selection.SelectionListener;
 import com.vaadin.flow.spring.annotation.UIScope;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,9 +25,9 @@ import java.util.stream.Collectors;
 @UIScope
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class AdsListPresenter {
-    @Autowired
-    private AdService service;
+    private final AdService service;
     private AdsPageBinder parentPresenter;
 
     private DataProvider<Ad,Void> dataProvider;

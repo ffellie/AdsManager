@@ -1,11 +1,9 @@
-package app.login;
+package app.routes.login;
 
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.stereotype.Component;
-
-import java.util.*;
 
 @Component
 @UIScope

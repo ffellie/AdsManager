@@ -1,4 +1,4 @@
-package app.login;
+package app.routes.login;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;

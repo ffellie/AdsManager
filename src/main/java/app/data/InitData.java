@@ -1,5 +1,7 @@
 package app.data;
 
+import app.data.user.User;
+import app.data.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

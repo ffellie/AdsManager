@@ -1,4 +1,4 @@
-package app.components.adedit;
+package app.components.ads;
 
 public interface AdsPageBinder {
     void onAdChangedOrCreated ();

@@ -1,9 +1,8 @@
-package app.components.adedit;
+package app.components.ads.edit;
 
-import app.components.ImageUpload;
-import app.components.MediaPreviewDialog;
+import app.components.media.ImageUpload;
+import app.components.media.MediaPreviewDialog;
 import app.data.Strings;
-import app.routes.AdsView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -12,7 +11,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.spring.annotation.UIScope;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 

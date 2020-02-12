@@ -1,8 +1,8 @@
-package app.routes;
+package app.routes.ads;
 
 
-import app.components.adedit.AdEditView;
-import app.components.adedit.AdsListView;
+import app.components.ads.edit.AdEditView;
+import app.components.ads.list.AdsListView;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.spring.annotation.UIScope;
 import lombok.Getter;
