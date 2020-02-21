@@ -1,54 +1,50 @@
-package app.data.group;
+package app.data.user;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+
 @Service
-public class GroupServiceImpl implements GroupService{
-    private final GroupRepository repository;
+@Transactional
+public class UserService {
+    @Autowired
+    private UserRepository userRepository;
 
-    public Group getGroupById (long groupID){
-        return repository.getById(groupID);
-    }
 
-    public void saveGroup (Group group){
-        repository.save(group);
-    }
-    public List<Group> findAll (){
-        return repository.findAll();
-    }
-
-    public List<Group> findAll (int offset, int limit , Map<String, Boolean> sortOrders){
+    public List<User> findAll(int offset, int limit, Map<String, Boolean> sortOrders){
         int page = offset / limit;
         List<Sort.Order> orders = sortOrders.entrySet().stream()
                 .map(e -> new Sort.Order(e.getValue() ? Sort.Direction.ASC : Sort.Direction.DESC, e.getKey()))
                 .collect(Collectors.toList());
         PageRequest pageRequest = PageRequest.of(page, limit , Sort.by(orders));
-        return repository.findAll(pageRequest).getContent();
-    }
-
-    public Integer count() {
-        return Math.toIntExact(repository.count());
-    }
-
-
-    public List<Group> findByName(int offset, int limit, String name, Map<String, Boolean> sortOrders){
-        int page = offset / limit;
-        List<Sort.Order> orders = sortOrders.entrySet().stream()
-                .map(e -> new Sort.Order(e.getValue() ? Sort.Direction.ASC : Sort.Direction.DESC, e.getKey()))
-                .collect(Collectors.toList());
-        PageRequest pageRequest = PageRequest.of(page, limit , Sort.by(orders));
-        List<Group> items = repository.findByNameContains(name, pageRequest);
+        List<User> items = userRepository.findAll(pageRequest).getContent();
         return items;
     }
+    public List<User> findByName(int offset, int limit, String name, Map<String, Boolean> sortOrders){
+        int page = offset / limit;
+        List<Sort.Order> orders = sortOrders.entrySet().stream()
+                .map(e -> new Sort.Order(e.getValue() ? Sort.Direction.ASC : Sort.Direction.DESC, e.getKey()))
+                .collect(Collectors.toList());
+        PageRequest pageRequest = PageRequest.of(page, limit , Sort.by(orders));
+
+        return userRepository.findByNameContains(name, pageRequest);
+    }
+    public User getUserByName(String name){
+        Optional<User> result = userRepository.findByName(name);
+        return result.orElse(null);
+    }
+    public Integer count() {
+        return Math.toIntExact(userRepository.count());
+    }
     public Integer countByName(String name) {
-        return Math.toIntExact(repository.countAllByNameContains(name));
+        return Math.toIntExact(userRepository.countByNameContains(name));
     }
 }

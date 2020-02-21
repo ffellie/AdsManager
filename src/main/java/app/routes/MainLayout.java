@@ -15,15 +15,15 @@ import lombok.Getter;
 @UIScope
 public class MainLayout extends AppLayout implements RouterLayout {
     @Getter
-    private Tab kioskTab, imageTab;
+    private Tab kioskTab, adminTab;
     public MainLayout (){
         setPrimarySection(AppLayout.Section.DRAWER);
         Image img = new Image("https://i.imgur.com/GPpnszs.png", "Vaadin Logo");
         img.setHeight("44px");
 //        addToNavbar(new DrawerToggle(), img);
         kioskTab = new Tab("Группы");
-        imageTab = new Tab("Изображения");
-        Tabs tabs = new Tabs(kioskTab, imageTab);
+        adminTab = new Tab("Администрирование");
+        Tabs tabs = new Tabs(kioskTab, adminTab);
         tabs.setOrientation(Tabs.Orientation.HORIZONTAL);
         tabs.getElement().getStyle().set("margin-left", "40%");
         addToNavbar(tabs);
@@ -33,8 +33,8 @@ public class MainLayout extends AppLayout implements RouterLayout {
             public void onComponentEvent(Tabs.SelectedChangeEvent selectedChangeEvent) {
                 if(selectedChangeEvent.getSelectedTab()==kioskTab)
                     getUI().ifPresent(ui -> ui.navigate("main"));
-//                else if(selectedChangeEvent.getSelectedTab()==imageTab)
-//                    getUI().ifPresent(ui -> ui.navigate("images"));
+                else if(selectedChangeEvent.getSelectedTab()==adminTab)
+                    getUI().ifPresent(ui -> ui.navigate("admin"));
             }
         });
     }

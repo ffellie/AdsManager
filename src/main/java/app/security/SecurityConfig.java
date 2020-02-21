@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy;
@@ -55,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sameOrigin()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/admin").authenticated()
+                .antMatchers("/main").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -72,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder encoder() {
-        return new Pbkdf2PasswordEncoder();
+        return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean

@@ -6,28 +6,37 @@ import app.components.ads.AdsPageBinder;
 import app.components.media.ImageUpload;
 import app.data.ad.Ad;
 import app.data.ad.MediaType;
+import app.data.user.User;
+import app.data.user.UserService;
+import com.abercap.mediainfo.api.MediaInfo;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.UIScope;
+import com.xuggle.xuggler.IContainer;
+import com.xuggle.xuggler.IContainerFormat;
 import elemental.json.Json;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.io.IOUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.UUID;
 
 @Component
 @UIScope
 @RequiredArgsConstructor
+//@Validated
 public class AdEditPresenter {
     private final AdService service;
+    private final UserService userService;
+
+    private final AdsPageBinder parentPresenter;
     private final static String FILES_DIRECTORY = "/Users/dias/projects/ad-content/";
     private MemoryBuffer receiver= new MemoryBuffer();
     private AdEditView view;
@@ -37,9 +46,6 @@ public class AdEditPresenter {
     private static final int DEFAULT_DURATION = 30;
     private byte[] fileBytes;
 
-    @Getter
-    @Setter
-    private AdsPageBinder parentPresenter;
 
     public void view (AdEditView view){
         this.view = view;
@@ -63,8 +69,15 @@ public class AdEditPresenter {
     }
 
     public void getAd (long adID){
-        if (adID==0)
+        if (adID==0) {
             ad = new Ad();
+            app.security.User secUser = (app.security.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userService.getUserByName(secUser.getName());
+            if (user!=null)
+                ad.setUser(user);
+            else
+                UI.getCurrent().navigate("login");
+        }
         else
             ad = service.getAdById(adID);
         binder.setBean(ad);
@@ -75,6 +88,7 @@ public class AdEditPresenter {
         else {
             view.getViewMediaButton().setEnabled(false);
         }
+        view.getDurationField().setEnabled(true);
         isFileUploaded = false;
     }
 
@@ -83,6 +97,8 @@ public class AdEditPresenter {
         view.setImageUpload(imageUpload);
         imageUpload.addSucceededListener(event -> {
             try {
+                view.getDurationField().setEnabled(true);
+
                 fileBytes=IOUtils.toByteArray(receiver.getInputStream());
                 String mime = event.getMIMEType();
                 String extension = mime.split("/")[1];
@@ -94,6 +110,26 @@ public class AdEditPresenter {
                 ad.setFilename(filename);
                 isFileUploaded=true;
                 configureDialog();
+                try {
+                    File file = new File( FILES_DIRECTORY + ad.getFilename());
+                    OutputStream outputStream = new FileOutputStream(file);
+                    outputStream.write(fileBytes);
+                    if (ad.getMediaType()==MediaType.Video){
+                        view.getDurationField().setEnabled(false);
+                        IContainer container = IContainer.make();
+                        int result = container.open((new ByteArrayInputStream(fileBytes)), IContainerFormat.make());
+
+                        if (result>=0) {
+                            System.out.println(container.getDuration());
+                            ad.setDuration((int) (container.getDuration()/1000000));
+                            view.getDurationField().setValue((double) (container.getDuration()/1000000));
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
                 imageUpload.getElement().setPropertyJson("files", Json.createArray());
             }
             catch (IOException e){
@@ -105,18 +141,8 @@ public class AdEditPresenter {
     private void configureSaveButton (){
         view.getSaveButton().addClickListener(buttonClickEvent -> {
             if (validateInput()) {
-                if (isFileUploaded) {
-                    try {
-                        File file = new File( FILES_DIRECTORY + ad.getFilename());
-                        OutputStream outputStream = new FileOutputStream(file);
-                        outputStream.write(fileBytes);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
                 service.saveAd(ad);
-                ad = null;
+                getAd(0);
                 parentPresenter.onAdChangedOrCreated();
             }
         });

@@ -1,4 +1,4 @@
-package app.content;
+package app.api.services;
 
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;

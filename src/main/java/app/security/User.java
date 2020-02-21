@@ -1,14 +1,20 @@
 package app.security;
 
 
+import app.data.user.UserRole;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
-@Data
+
+@Getter
+@Setter
 public class User implements UserDetails {
 
     private static final String USE_APP_ROLE = "USE-APP-ROLE";
@@ -16,12 +22,14 @@ public class User implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     private String password;
-    private String login;
+    private String name;
+    private UserRole role;
 
-    public User(String login, String password) {
+    public User(String login, String password, UserRole role) {
         super();
-        this.login = login;
+        this.name = login;
         this.password = password;
+        this.role = role;
     }
 
     @SuppressWarnings("serial")
@@ -47,7 +55,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return name;
     }
 
     @Override
@@ -70,7 +78,27 @@ public class User implements UserDetails {
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        return true;
+    }
 
 
 

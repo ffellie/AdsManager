@@ -12,10 +12,10 @@ public class AuthUserLookupService {
     UserRepository userDAO;
 
     User findUser (String login){
-        Optional<app.data.user.User> user = userDAO.findByLogin(login);
+        Optional<app.data.user.User> user = userDAO.findByName(login);
         if (user.isPresent()) {
             app.data.user.User user1 = user.get();
-            return new User(user1.getLogin(),user1.getPassword());
+            return new User(user1.getName(),user1.getPassword(),user1.getRole());
        }
         return null;
         }

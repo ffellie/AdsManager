@@ -13,6 +13,13 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.4.RELEASE</version>
     </parent>
+    <repositories>
+        <repository>
+            <id>xuggle repo</id>
+            <url>https://files.liferay.com/mirrors/xuggle.googlecode.com/svn/trunk/repo/share/java/</url>
+        </repository>
+
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -70,6 +77,17 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.9.9</version>
         </dependency>
+        <dependency>
+            <groupId>com.abercap</groupId>
+            <artifactId>mediainfo-java-api</artifactId>
+            <version>1.0.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>xuggle</groupId>
+            <artifactId>xuggle-xuggler</artifactId>
+            <version>5.4</version>
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
