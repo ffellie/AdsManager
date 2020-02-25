@@ -36,6 +36,7 @@ public class AdsPresenter implements AdsPageBinder {
     public void onGroupSelected (long groupID){
         selectedGroup = service.getGroupById(groupID);
         view.getAdsListView().getPresenter().getView().getAdGrid().asMultiSelect().setEnabled(true);
+        System.out.println("Num of ids: " + selectedGroup.getAdIDs().size());
         view.getAdsListView().getPresenter().selectGroups(selectedGroup.getAdIDs());
     }
 

@@ -14,7 +14,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ads")
-@Data
+//@Data
+@Setter
+@Getter
 @JsonIgnoreProperties
 public class Ad {
     @Id
@@ -31,5 +33,20 @@ public class Ad {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @NotNull
+    @JsonIgnore
     private User user;
+
+    @Override
+    public boolean equals(Object obj) {
+        return true;
+//        if (!obj.getClass().equals(this.getClass()))
+////            return false;
+//        Ad item = (Ad) obj;
+//        return (item.getMediaType()==this.getMediaType()
+//                && item.getFilename().equals(this.getFilename())
+//                && item.getId()==this.getId()
+//                && item.getName().equals(this.name)
+//                && item.getDuration()==this.duration
+//                && item.getDescription().equals(this.description));
+    }
 }

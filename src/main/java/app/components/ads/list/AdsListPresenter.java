@@ -63,7 +63,11 @@ public class AdsListPresenter {
     public void selectGroups (Collection<Long> adIDs){
         lock = true;
         view.getAdGrid().asMultiSelect().deselectAll();
+        view.getAdGrid().asMultiSelect().setEnabled(true);
+        System.out.println("Num of selected: " +         view.getAdGrid().asMultiSelect().getSelectedItems().size());
         view.getAdGrid().asMultiSelect().select(service.getAllByID(adIDs));
+        System.out.println("Num of selected: " +         view.getAdGrid().asMultiSelect().getSelectedItems().size());
+
         lock = false;
     }
 

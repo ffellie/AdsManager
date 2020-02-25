@@ -13,11 +13,11 @@ public class InitData implements ApplicationRunner {
     private UserRepository userDAO;
     @Override
     public void run (ApplicationArguments args){
-        User admin = new User();
-        admin.setName("admin");
-        admin.setPassword("admin");
-        admin.setRole(UserRole.ADMIN);
-        userDAO.save(admin);
+//        User admin = new User();
+//        admin.setName("admin");
+//        admin.setPassword("admin");
+//        admin.setRole(UserRole.ADMIN);
+//        userDAO.save(admin);
     }
 
     @Autowired

@@ -41,7 +41,6 @@ public class GroupsPresenter {
         group.setUrl(UUID.randomUUID().toString());
         app.security.User secUser = (app.security.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserByName(secUser.getName());
-        group.setUser(user);
     }
 
     private void configureAddButton (){
@@ -63,7 +62,6 @@ public class GroupsPresenter {
                 view.getGroupName().clear();
                 app.security.User secUser = (app.security.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 User user = userService.getUserByName(secUser.getName());
-                group.setUser(user);
                 view.getGroupsGrid().getDataProvider().refreshAll();
             }
         });

@@ -6,11 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @JsonSerialize
 public class GroupModel {
     private String name;
-    List<Ad> ads;
+    Set<Ad> ads;
 }
