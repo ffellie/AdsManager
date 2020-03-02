@@ -1,5 +1,6 @@
 package app.data.user;
 
+import app.data.group.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -47,4 +48,19 @@ public class UserService {
     public Integer countByName(String name) {
         return Math.toIntExact(userRepository.countByNameContains(name));
     }
+
+    public List<User> findAllByGroup (Group group){
+        return userRepository.findAllByIdIn(group.getUserIDs());
+    }
+    public List<User> findAllByGroupNotIn (Group group){
+        return userRepository.findAllByIdNotIn(group.getUserIDs());
+    }
+
+    public Integer countByGroupNotIn (Group group){
+        return userRepository.countAllByIdNotIn(group.getUserIDs());
+    }
+    public Integer countByGroup (Group group){
+        return userRepository.countAllByIdIn(group.getUserIDs());
+    }
+
 }

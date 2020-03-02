@@ -18,6 +18,7 @@ public class Search extends HorizontalLayout {
     private TextField searchField;
     private Button filterButton;
     private ComboBox<String> filterBox;
+    private boolean filterBoxEnabled = true;
     public Search (Grid grid, SearchService service){
         this.grid = grid;
         this.service = service;
@@ -28,13 +29,14 @@ public class Search extends HorizontalLayout {
         configureSearchButton();
     }
 
-
     private void configureSearchButton (){
         filterButton.addClickListener(e -> {
             if (searchField.isEmpty())
                 filterUsers("searchField.getValue()",filterBox.getValue());
-            else
+            else if (filterBoxEnabled)
                 filterUsers(searchField.getValue(),filterBox.getValue());
+            else filterUsers(searchField.getValue(),null);
+
         });
         searchField.addValueChangeListener(e -> filterUsers(searchField.getValue(),"name"));
     }
@@ -61,5 +63,10 @@ public class Search extends HorizontalLayout {
         );
         grid.setDataProvider(dataProvider);
 
+    }
+
+    public void setFilterBoxEnabled(boolean enabled){
+        filterBox.setVisible(enabled);
+        filterBoxEnabled = enabled;
     }
 }

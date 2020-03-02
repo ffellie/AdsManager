@@ -7,15 +7,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
+@Transactional
 public interface UserRepository extends JpaRepository<User,Long> {
-    @Transactional
-    public Optional<User> findByName(String email);
+    Optional<User> findByName(String email);
 
-    @Transactional
     List<User> findByNameContains(String name, Pageable pageable);
 
-    @Transactional
-    public long countByNameContains(String name);
+    long countByNameContains(String name);
+
+    List<User> findAllByIdIn (Set<Long> IDs);
+    List<User> findAllByIdNotIn (Set<Long> IDs);
+    int countAllByIdIn (Set<Long> IDs);
+    int countAllByIdNotIn (Set<Long> IDs);
 }
