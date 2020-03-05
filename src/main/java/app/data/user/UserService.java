@@ -7,9 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -49,15 +47,39 @@ public class UserService {
         return Math.toIntExact(userRepository.countByNameContains(name));
     }
 
-    public List<User> findAllByGroup (Group group){
-        return userRepository.findAllByIdIn(group.getUserIDs());
+    public List<User> findAllByGroup (int offset, int limit, Group group, Map<String, Boolean> sortOrders){
+        int page = offset / limit;
+        List<Sort.Order> orders = sortOrders.entrySet().stream()
+                .map(e -> new Sort.Order(e.getValue() ? Sort.Direction.ASC : Sort.Direction.DESC, e.getKey()))
+                .collect(Collectors.toList());
+        PageRequest pageRequest = PageRequest.of(page, limit , Sort.by(orders));
+
+        return userRepository.findAllByIdIn(group.getUserIDs(), pageRequest);
     }
-    public List<User> findAllByGroupNotIn (Group group){
-        return userRepository.findAllByIdNotIn(group.getUserIDs());
+    public List<User> findAllByGroupNotIn (int offset, int limit, Group group, Map<String, Boolean> sortOrders){
+        int page = offset / limit;
+        List<Sort.Order> orders = sortOrders.entrySet().stream()
+                .map(e -> new Sort.Order(e.getValue() ? Sort.Direction.ASC : Sort.Direction.DESC, e.getKey()))
+                .collect(Collectors.toList());
+        PageRequest pageRequest = PageRequest.of(page, limit , Sort.by(orders));
+
+        Collection<Long> IDs ;
+        if (group.getUserIDs().size()==0) {
+            IDs = new ArrayList<>();
+            IDs.add(Long.valueOf(-1));
+        }
+        else IDs = group.getUserIDs();
+        return userRepository.findAllByIdNotIn(IDs, pageRequest);
     }
 
     public Integer countByGroupNotIn (Group group){
-        return userRepository.countAllByIdNotIn(group.getUserIDs());
+        Collection<Long> IDs;
+        if (group.getUserIDs().size()==0) {
+            IDs = new ArrayList<>();
+            IDs.add(Long.valueOf(-1));
+        }
+        else IDs = group.getUserIDs();
+        return userRepository.countAllByIdNotIn(IDs);
     }
     public Integer countByGroup (Group group){
         return userRepository.countAllByIdIn(group.getUserIDs());

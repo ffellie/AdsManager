@@ -1,6 +1,7 @@
 package app.routes.usergroups.components;
 
 import app.data.group.Group;
+import app.data.group.GroupService;
 import app.data.user.User;
 import app.data.user.UserService;
 import com.vaadin.flow.component.button.Button;
@@ -8,10 +9,13 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.Query;
+import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
@@ -20,9 +24,11 @@ public class AddUserToGroupDialog extends Dialog {
     private UserService service;
     private Grid<User> userGrid;
     private Group group;
-    public AddUserToGroupDialog (UserService service){
+    private GroupService groupService;
+    public AddUserToGroupDialog (UserService service, GroupService groupService){
         super();
         this.service=service;
+        this.groupService = groupService;
         userGrid = new Grid<>(User.class);
         userGrid.removeAllColumns();
         userGrid.addColumns("name","role");
@@ -36,7 +42,9 @@ public class AddUserToGroupDialog extends Dialog {
     public void open(Group group) {
         super.open();
         this.group = group;
+        configureGridDataProvider();
         userGrid.getDataProvider().refreshAll();
+
     }
 
 
@@ -47,6 +55,7 @@ public class AddUserToGroupDialog extends Dialog {
            this.setEnabled(false);
            group.getUserIDs().add(user.getId());
            userGrid.getDataProvider().refreshAll();
+           groupService.saveGroup(group);
            this.setEnabled(true);
             userGrid.getDataProvider().refreshAll();
         });
@@ -57,8 +66,9 @@ public class AddUserToGroupDialog extends Dialog {
         DataProvider dataProvider = DataProvider.fromCallbacks(
                 this::fetchUsers,
                 query -> {
-                    if (group==null)
+                    if (group==null){
                         return 0;
+                    }
                     return service.countByGroupNotIn(group);
                 }
         );
@@ -66,8 +76,17 @@ public class AddUserToGroupDialog extends Dialog {
     }
 
     private Stream fetchUsers(Query<Group, ?> query) {
-        if (group==null)
+        if (group==null) {
             return new ArrayList<Group>().stream();
-        return service.findAllByGroupNotIn(group).stream();
+        }
+        int offset = query.getOffset();
+        int limit = query.getLimit();
+        Map<String, Boolean> sortOrder = query.getSortOrders().stream()
+                .collect(Collectors.toMap(
+                        sort -> sort.getSorted(),
+                        sort -> sort.getDirection() == SortDirection.ASCENDING));
+
+        System.out.println(service.findAllByGroupNotIn(offset,limit,group,sortOrder).size());
+        return service.findAllByGroupNotIn(offset,limit,group,sortOrder).stream();
     }
 }

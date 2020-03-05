@@ -46,6 +46,7 @@ public class UserGroupsPresenter {
         Button viewButton = new Button(Strings.VIEW_GROUP);
         viewButton.addClickListener(click ->{
             selectedGroup = group;
+            configureUserGridDataProvider();
             view.getUserGroupGrid().getDataProvider().refreshAll();
         });
         layout.add(viewButton);
@@ -98,6 +99,13 @@ public class UserGroupsPresenter {
     private Stream fetchUsers(Query<Group, ?> query) {
         if (selectedGroup==null)
             return new ArrayList<Group>().stream();
-        return userService.findAllByGroup(selectedGroup).stream();
+        int offset = query.getOffset();
+        int limit = query.getLimit();
+        Map<String, Boolean> sortOrder = query.getSortOrders().stream()
+                .collect(Collectors.toMap(
+                        SortOrder::getSorted,
+                        sort -> sort.getDirection() == SortDirection.ASCENDING));
+
+        return userService.findAllByGroup(offset, limit, selectedGroup, sortOrder).stream();
     }
 }
