@@ -10,13 +10,12 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
 import lombok.Getter;
 
-@Route(value = "edit-group", layout = MainLayout.class)
+@Route(value = "groups-edit", layout = MainLayout.class)
 @UIScope
 @Getter
 public class GroupEditRoute extends VerticalLayout implements HasUrlParameter<Long> {
     private long groupID;
-    private UserEditView view;
-    private UserEditPresenter presenter;
+    private GroupEditView view;
 
     @Override
     public void setParameter(BeforeEvent event,
@@ -27,12 +26,11 @@ public class GroupEditRoute extends VerticalLayout implements HasUrlParameter<Lo
         else {
             this.groupID = param;
         }
-//        presenter.view(view,groupID);
+        presenter.view(view,groupID);
     }
-    public GroupEditRoute(UserEditView view, UserEditPresenter presenter){
+    public GroupEditRoute(GroupEditView view){
         super(view);
         this.view=view;
-        this.presenter=presenter;
 //        view.setWidthFull();
     }
 

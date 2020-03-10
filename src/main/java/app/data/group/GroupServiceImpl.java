@@ -79,4 +79,9 @@ public class GroupServiceImpl implements GroupService{
         group.getUserIDs().remove(user.getId());
         repository.save(group);
     };
+
+    @Override
+    public List<Group> findDistinctByUserIDsIn (Collection<Long> userIDs){
+        return repository.findDistinctByUserIDsIn(userIDs);
+    };
 }

@@ -5,6 +5,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Date;
+import java.sql.Time;
 
 @Entity
 @Table(name = "time_intervals")
@@ -13,9 +15,11 @@ public class Promotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    private int start;
-    private int end;
+    private int duration;
+    private Time start;
+    private Time end;
+//    private Date startDate;
+//    private Date endDate;
     private int minutes;
     private long adID;
     @ManyToOne

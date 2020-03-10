@@ -16,4 +16,5 @@ public interface AdService {
     List<Ad> findByName(int offset, int limit, String name, Map<String, Boolean> sortOrders);
     Integer countByName(String name);
     Set<Ad> getAllByID (Collection<Long> adIDs);
+
 }

@@ -1,5 +1,6 @@
 package app.routes.admin;
 
+import app.ConstData;
 import app.data.user.UserRole;
 import app.routes.MainLayout;
 import app.security.User;
@@ -28,7 +29,7 @@ public class AdminRoute extends VerticalLayout implements BeforeEnterObserver, A
     @Override
     public void beforeEnter(BeforeEnterEvent event){
         if ((SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)){
-            event.rerouteTo("login");
+            event.rerouteTo(ConstData.LOGIN_ROUTE);
         }
         else {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -125,6 +125,7 @@ public class UserGroupsPresenter {
                 groupService.remove(group);
                 view.getUserGroupGrid().getDataProvider().refreshAll();
                 view.setEnabled(true);
+                dialog.close();
                 }
             );
             dialog.add(new VerticalLayout(text,new HorizontalLayout(cancelButton,yesButton)));

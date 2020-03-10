@@ -16,4 +16,5 @@ public interface GroupService {
     void remove(Group group);
     void remove(Collection<Group> groups);
     void removeUserFromGroup(Group group,User user);
+    List<Group> findDistinctByUserIDsIn (Collection<Long> userIDs);
 }

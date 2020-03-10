@@ -20,7 +20,6 @@ public class MainLayout extends AppLayout implements RouterLayout {
         setPrimarySection(AppLayout.Section.DRAWER);
         Image img = new Image("https://i.imgur.com/GPpnszs.png", "Vaadin Logo");
         img.setHeight("44px");
-//        addToNavbar(new DrawerToggle(), img);
         kioskTab = new Tab("Группы");
         adminTab = new Tab("Администрирование");
         Tabs tabs = new Tabs(kioskTab, adminTab);

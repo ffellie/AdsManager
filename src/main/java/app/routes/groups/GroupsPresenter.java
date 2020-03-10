@@ -1,5 +1,8 @@
 package app.routes.groups;
 
+import app.ConstData;
+import app.data.Strings;
+import app.data.group.PromotionRepository;
 import app.data.user.UserRole;
 import app.routes.ads.AdsPageBinder;
 import app.data.group.Group;
@@ -25,30 +28,35 @@ public class GroupsPresenter {
     private GroupsView view;
     private final GroupService service;
     private final UserService userService;
+    private final PromotionRepository promotionRepository;
     private User user;
     void view (GroupsView view){
         this.view = view;
-        app.security.User secUser = (app.security.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        user = userService.getUserByName(secUser.getName());
-        configureGridData();
-//        configureGridSelectionEvent();
-
-
+        getUser();
+        addColumns();
     }
 
-
+    private void addColumns (){
+        view.getGroupsGrid().addColumn(promotionRepository::countAllByGroup).setHeader(Strings.NUM_OF_ADS).setKey("ads-num");
+        addActionButtons();
+    }
     private void addActionButtons (){
-        view.getGroupsGrid().addComponentColumn(this::createSelectButton);
+        view.getGroupsGrid().addComponentColumn(this::createSelectButton).setHeader(Strings.ACTIONS);
     }
     private Button createSelectButton (Group g){
-        Button selectButton = new Button("Просмотр");
+        Button selectButton = new Button(Strings.VIEW);
         selectButton.addClickListener(event ->{
-            UI.getCurrent().navigate("edit-group/" + g.getId());
+            UI.getCurrent().navigate(ConstData.GROUP_EDIT_ROUTE + g.getId());
         });
         return selectButton;
     }
 
-    private void configureGridData (){
+    private void getUser(){
+        app.security.User secUser = (app.security.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        user = userService.getUserByName(secUser.getName());
+    }
+
+    public void configureGridData (){
         view.getGroupsGrid().setPageSize(50);
         if (user.getRole()== UserRole.ADMIN) {
             DataProvider<Group, Void> dataProvider = DataProvider.fromCallbacks(
@@ -70,7 +78,9 @@ public class GroupsPresenter {
             view.getGroupsGrid().setDataProvider(dataProvider);
         }
         else {
-//            view.getGroupsGrid().setItems(service.f);
+            List<Long> id = new ArrayList<>();
+            id.add(user.getId());
+            view.getGroupsGrid().setItems(service.findDistinctByUserIDsIn(id));
         }
     }
 }

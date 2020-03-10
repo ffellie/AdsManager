@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -15,5 +16,5 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     List<Group> findByNameContains (String name, Pageable pageable);
     int countAllByNameContains(String  name);
     List<Group> findByUrl (String url);
-
+    List<Group> findDistinctByUserIDsIn (Collection<Long> userIDs);
 }

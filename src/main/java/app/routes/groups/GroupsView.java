@@ -25,12 +25,15 @@ public class GroupsView extends VerticalLayout {
 
     public GroupsView (GroupsPresenter presenter){
         super();
+
         this.presenter = presenter;
         groupName = new TextField();
         groupsGrid = new Grid<>(Group.class);
         add(groupsGrid);
-        groupsGrid.setSizeFull();
+        groupsGrid.setWidthFull();
+        groupsGrid.setHeight("500px");
         groupsGrid.removeAllColumns();
+        groupsGrid.addColumns("name","url");
         presenter.view(this);
     }
 }

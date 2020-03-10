@@ -1,5 +1,6 @@
 package app.routes.ads.components.edit;
 
+import app.ConstData;
 import app.data.Strings;
 import app.data.ad.AdService;
 import app.routes.ads.AdsPageBinder;
@@ -12,8 +13,6 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.UIScope;
-import com.xuggle.xuggler.IContainer;
-import com.xuggle.xuggler.IContainerFormat;
 import elemental.json.Json;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
@@ -31,7 +30,6 @@ public class AdEditPresenter {
     private final AdService service;
     private final UserService userService;
     private final AdsPageBinder parentPresenter;
-    private final static String FILES_DIRECTORY = "./data";
     private MemoryBuffer receiver= new MemoryBuffer();
     private AdEditView view;
     private Ad ad;
@@ -95,7 +93,7 @@ public class AdEditPresenter {
     public boolean save (){
         if (validateInput()) {
             try {
-                File file = new File( FILES_DIRECTORY + ad.getFilename());
+                File file = new File( ConstData.FILES_DIR + ad.getFilename());
                 OutputStream outputStream = new FileOutputStream(file);
                 outputStream.write(fileBytes);
 //                if (ad.getMediaType()==MediaType.Video){
