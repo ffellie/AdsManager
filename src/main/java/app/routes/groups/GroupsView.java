@@ -1,4 +1,4 @@
-package app.components.groups;
+package app.routes.groups;
 
 import app.components.search.Search;
 import app.data.Strings;
@@ -21,24 +21,16 @@ import org.springframework.stereotype.Component;
 public class GroupsView extends VerticalLayout {
     private final GroupsPresenter presenter;
     private Grid<Group> groupsGrid;
-    private Search search;
     private TextField groupName;
-    private Button saveButton;
-    private Button addButton;
 
     public GroupsView (GroupsPresenter presenter){
         super();
         this.presenter = presenter;
         groupName = new TextField();
-        groupName.setLabel("Название группы");
-        saveButton = new Button(Strings.SAVE);
-        addButton = new Button("Добавить");
-        HorizontalLayout editContainer = new HorizontalLayout();
-        editContainer.add(groupName, saveButton);
         groupsGrid = new Grid<>(Group.class);
-        add(editContainer,groupsGrid,addButton);
-        groupsGrid.removeColumnByKey("adIDs");
-        groupsGrid.removeColumnByKey("id");
+        add(groupsGrid);
+        groupsGrid.setSizeFull();
+        groupsGrid.removeAllColumns();
         presenter.view(this);
     }
 }

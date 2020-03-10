@@ -46,7 +46,14 @@ public class UserGroupsView extends HorizontalLayout {
         this.addUserToGroupDialog = addUserToGroupDialog;
         VerticalLayout h1 = new VerticalLayout(groupsCaption, userGroupGrid, addGroupButton);
         VerticalLayout h2 = new VerticalLayout(userCaption, userGrid, addUserButton);
+        h1.setWidth("50%");
         add(h1,h2);
+        configurePositionsAndSize();
         presenter.view(this);
+    }
+
+    private void configurePositionsAndSize(){
+        setAlignItems(Alignment.CENTER);
+        userGroupGrid.setMinWidth("600px");
     }
 }

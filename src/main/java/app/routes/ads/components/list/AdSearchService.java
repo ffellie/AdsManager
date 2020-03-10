@@ -1,7 +1,7 @@
-package app.components.ads.list;
+package app.routes.ads.components.list;
 
 import app.components.search.SearchService;
-import app.components.ads.AdService;
+import app.data.ad.AdService;
 import app.data.ad.Ad;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,12 @@ import java.util.Map;
 public class AdSearchService implements SearchService {
     private final AdService adService;
     public List<Ad> find (int offset, int limit, String param, String filter, Map<String,Boolean> sortOrders){
-        if (filter!=null && filter.equals("name"))
+        if (param!=null && !param.trim().isEmpty())
             return adService.findByName(offset,limit,param,sortOrders);
         return adService.findAll(offset,limit,sortOrders);
     }
     public int count(String name, String filter){
-        if (filter!=null && filter.equals("name"))
+        if (name!=null && !name.trim().isEmpty())
             return adService.countByName(name);
         return adService.count();
     }

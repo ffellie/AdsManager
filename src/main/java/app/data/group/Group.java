@@ -8,10 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "groups")
@@ -26,14 +23,12 @@ public class Group {
 
     private String url;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name="ad_ids", joinColumns=@JoinColumn(name="group_id"))
-    @Column(name="ad_ids")
-    private Set<Long> adIDs;
+    @OneToMany(mappedBy = "group", orphanRemoval = true, cascade = CascadeType.ALL)
+    private Set<Promotion> promotions = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="user_ids", joinColumns=@JoinColumn(name="group_id"))
     @Column(name="user_ids")
-    private Set<Long> userIDs;
+    private Set<Long> userIDs = new TreeSet<>();
 
 }

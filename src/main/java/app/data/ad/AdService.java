@@ -1,4 +1,4 @@
-package app.components.ads;
+package app.data.ad;
 
 import app.data.ad.Ad;
 

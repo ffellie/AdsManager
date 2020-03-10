@@ -1,10 +1,9 @@
 package app.data.group;
 
+import app.data.user.User;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public interface GroupService {
     Group getGroupById (long groupID);
@@ -14,4 +13,7 @@ public interface GroupService {
     Integer count();
     List<Group> findByName(int offset, int limit, String name, Map<String, Boolean> sortOrders);
     Integer countByName(String name);
+    void remove(Group group);
+    void remove(Collection<Group> groups);
+    void removeUserFromGroup(Group group,User user);
 }

@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api")
 public class ApiController {
     private final GroupApiService groupApiService;
-    @GetMapping(value = "{url}")
-    public ResponseEntity<GroupModel> getGroup (@PathVariable String url){return groupApiService.getGroup(url);}
+//    @GetMapping(value = "{url}")
+//    public ResponseEntity<GroupModel> getGroup (@PathVariable String url){return groupApiService.getGroup(url);}
 }

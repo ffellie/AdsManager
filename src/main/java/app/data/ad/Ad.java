@@ -27,7 +27,6 @@ public class Ad {
     @Column(name = "name", unique = true)
     private String name;
     private String description;
-    private int duration;
     private MediaType mediaType;
     private String filename;
     @ManyToOne

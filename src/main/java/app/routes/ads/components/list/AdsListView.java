@@ -1,16 +1,16 @@
-package app.components.ads.list;
+package app.routes.ads.components.list;
 
+import app.components.media.MediaPreviewDialog;
 import app.components.search.Search;
 import app.data.ad.Ad;
-import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.GridMultiSelectionModel;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.spring.annotation.UIScope;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
-//@Route(value = "ads", layout = AdsView.class)
 @Component
 @UIScope
 @Getter
@@ -18,19 +18,20 @@ public class AdsListView extends VerticalLayout {
     private AdsListPresenter presenter;
     private Grid<Ad> adGrid;
     private Search search;
-    private Button addButton;
-    public AdsListView(AdsListPresenter presenter, AdSearchService adSearchService) {
+    private Text header;
+    private MediaPreviewDialog mediaPreviewDialog;
+    public AdsListView(AdsListPresenter presenter, AdSearchService adSearchService, MediaPreviewDialog mediaPreviewDialog) {
         this.presenter = presenter;
+        this.mediaPreviewDialog = mediaPreviewDialog;
         adGrid = new Grid<>(Ad.class);
         search = new Search(adGrid, adSearchService);
-        addButton = new Button("Добавить рекламу");
+        header = new Text("Список файлов");
+        Label searchLabel = new Label("Поиск по файлам");
         adGrid.removeAllColumns();
         adGrid.addColumn("name");
-        adGrid.addColumn("duration");
         adGrid.addColumn("mediaType");
-        add(search,adGrid, addButton);
-        GridMultiSelectionModel<Ad> selectionModel = (GridMultiSelectionModel<Ad>) adGrid.setSelectionMode(Grid.SelectionMode.MULTI);
-        selectionModel.setSelectAllCheckboxVisibility(GridMultiSelectionModel.SelectAllCheckboxVisibility.VISIBLE);
+        add(searchLabel,search,adGrid);
+        search.setFilterBoxEnabled(false);
         presenter.view(this);
     }
 }

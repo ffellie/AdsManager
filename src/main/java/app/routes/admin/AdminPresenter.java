@@ -87,7 +87,7 @@ public class AdminPresenter {
         Button deleteButton = new Button("Удалить", clickEvent ->{
             Dialog deleteDialog = new Dialog();
             Button confirmButton = new Button("Да", event -> {
-                view.getUserRepository().delete(user);
+                service.removeUser(user);
                 view.getUserGrid().setDataProvider(dataProvider);
                 deleteDialog.close();
             });

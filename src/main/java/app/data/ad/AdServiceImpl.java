@@ -1,7 +1,5 @@
-package app.components.ads;
+package app.data.ad;
 
-import app.data.ad.Ad;
-import app.data.ad.AdRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,6 @@
 package app.components.search;
 
+import app.data.Strings;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
@@ -22,7 +23,7 @@ public class Search extends HorizontalLayout {
     public Search (Grid grid, SearchService service){
         this.grid = grid;
         this.service = service;
-        filterButton = new Button();
+        filterButton = new Button(Strings.SEARCH);
         filterBox = new ComboBox<>();
         searchField = new TextField();
         add(searchField,filterBox,filterButton);
@@ -32,7 +33,7 @@ public class Search extends HorizontalLayout {
     private void configureSearchButton (){
         filterButton.addClickListener(e -> {
             if (searchField.isEmpty())
-                filterUsers("searchField.getValue()",filterBox.getValue());
+                filterUsers("",filterBox.getValue());
             else if (filterBoxEnabled)
                 filterUsers(searchField.getValue(),filterBox.getValue());
             else filterUsers(searchField.getValue(),null);

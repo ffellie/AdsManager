@@ -19,15 +19,15 @@ import java.util.Set;
 public class GroupApiServiceImpl implements GroupApiService {
     private final AdRepository adRepository;
     private final GroupRepository groupRepository;
-    @Override
-    public ResponseEntity<GroupModel> getGroup (String url)  {
-        System.out.println("Got request");
-        List<Group> groups = groupRepository.findByUrl(url);
-        if (groups.size()!=1)
-            return ResponseEntity.notFound().build();
-        Group group = groups.get(0);
-        Set<Ad> ads = adRepository.findAllByIdIn(group.getAdIDs());
-        return ResponseEntity.ok()
-                .body(new GroupModel(group.getName(),ads));
-    }
+//    @Override
+//    public ResponseEntity<GroupModel> getGroup (String url)  {
+//        System.out.println("Got request");
+//        List<Group> groups = groupRepository.findByUrl(url);
+//        if (groups.size()!=1)
+//            return ResponseEntity.notFound().build();
+//        Group group = groups.get(0);
+//        Set<Ad> ads ;
+//        return ResponseEntity.ok()
+//                .body(new GroupModel(group.getName(),ads));
+//    }
 }

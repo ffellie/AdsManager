@@ -15,4 +15,5 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     List<Group> findByNameContains (String name, Pageable pageable);
     int countAllByNameContains(String  name);
     List<Group> findByUrl (String url);
+
 }

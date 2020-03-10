@@ -1,6 +1,9 @@
 package app.data.user;
 
+import app.data.ad.AdRepository;
 import app.data.group.Group;
+import app.data.group.PromotionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -13,9 +16,19 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final AdRepository adRepository;
+    private final PromotionRepository promotionRepository;
+
+    public void removeUser (User user){
+        List<Long> adIDs = new ArrayList<>();
+        adRepository.findAllByUser(user).forEach(ad -> {adIDs.add(ad.getId());});
+        promotionRepository.deleteAllByAdIDIn(adIDs);
+        adRepository.deleteAll(user.getAds());
+    }
+
 
 
     public List<User> findAll(int offset, int limit, Map<String, Boolean> sortOrders){

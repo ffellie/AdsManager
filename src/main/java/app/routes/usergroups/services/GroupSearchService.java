@@ -1,6 +1,5 @@
 package app.routes.usergroups.services;
 
-import app.components.ads.AdService;
 import app.components.search.SearchService;
 
 import app.data.group.Group;
