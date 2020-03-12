@@ -1,6 +1,6 @@
 package app.components.search;
 
-import app.data.Strings;
+import app.constants.Strings;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;

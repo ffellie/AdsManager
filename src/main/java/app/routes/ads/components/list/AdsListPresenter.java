@@ -3,7 +3,7 @@ package app.routes.ads.components.list;
 import app.data.ad.AdService;
 import app.data.ad.MediaType;
 import app.routes.ads.AdsPageBinder;
-import app.data.Strings;
+import app.constants.Strings;
 import app.data.ad.Ad;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;

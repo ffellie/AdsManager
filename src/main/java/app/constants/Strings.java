@@ -1,4 +1,4 @@
-package app.data;
+package app.constants;
 
 public class Strings {
     public static final String
@@ -32,7 +32,9 @@ public class Strings {
             TIME_ERROR = "Время начала не может быть меньше времение конца",
             DURATION = "Длительность (сек.)",
             PLAYBACK_TIME = "Время проигрывания (мин. в час)",
-            PLAYBACK_OPTIONS = "Настройка воспроизведения";
+            PLAYBACK_OPTIONS = "Настройка воспроизведения",
+            PROMOTION_SAVED = "Playback settings saved",
+            PROMOTION_NOT_SAVED = "Playback settings were not saved";
 
     private Strings(){}
 }

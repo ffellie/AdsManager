@@ -1,6 +1,6 @@
 package app.routes.groups;
 
-import app.ConstData;
+import app.constants.RouteURLs;
 import app.data.user.UserRole;
 import app.routes.MainLayout;
 import app.security.User;
@@ -27,7 +27,7 @@ public class GroupsRoute extends VerticalLayout implements BeforeEnterObserver, 
     @Override
     public void beforeEnter(BeforeEnterEvent event){
         if ((SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)){
-            event.rerouteTo(ConstData.LOGIN_ROUTE);
+            event.rerouteTo(RouteURLs.LOGIN_ROUTE);
         }
         else {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

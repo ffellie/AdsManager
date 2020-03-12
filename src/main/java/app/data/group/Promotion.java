@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 @Entity
-@Table(name = "time_intervals")
+@Table(name = "promotions")
 @Data
 public class Promotion {
     @Id

@@ -1,9 +1,13 @@
 package app.routes.groupedit.components;
 
+import app.constants.Strings;
 import app.data.group.Promotion;
+import app.data.group.PromotionRepository;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.UIScope;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +18,19 @@ import java.time.LocalTime;
 @UIScope
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class PromotionPlaybackPresenter {
+    private final PromotionRepository promotionRepository;
     private PromotionPlaybackView view;
     private Promotion promotion;
     private Binder<Promotion> binder= new Binder<>(Promotion.class);
     public void view (PromotionPlaybackView view){
         this.view = view;
         configureBinder();
+    }
+
+    public void setPromotionAndRefresh (Promotion promotion){
+        binder.setBean(promotion);
     }
 
     private void configureBinder(){
@@ -47,6 +57,22 @@ public class PromotionPlaybackPresenter {
         if (view.getEndTimePicker().getValue().getNano()<view.getStartTimePicker().getValue().getNano()){
             view.getStartTimePicker().setInvalid(true);
             view.getEndTimePicker().setInvalid(true);
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean save (){
+        if (!validate())
+            return false;
+        try {
+            promotionRepository.save(promotion);
+            return true;
+        }
+        catch (Exception e){
+            Notification.show(Strings.PROMOTION_NOT_SAVED);
+            return false;
         }
     }
 }

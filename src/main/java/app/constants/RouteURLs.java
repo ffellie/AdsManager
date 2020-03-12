@@ -1,6 +1,6 @@
-package app;
+package app.constants;
 
-public class ConstData {
+public class RouteURLs {
     public static String
             FILES_DIR = "./data/",
             ADS_ROUTE="ads/",
@@ -10,5 +10,5 @@ public class ConstData {
             USER_GROUPS_ROUTE="usergroups/",
             GROUP_EDIT_ROUTE="groups-edit/";
 
-    private ConstData(){}
+    private RouteURLs(){}
 }

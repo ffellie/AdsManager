@@ -1,6 +1,6 @@
 package app.api.services;
 
-import app.ConstData;
+import app.constants.RouteURLs;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 @Service
 public class StorageServiceImpl implements StorageService{
     public ResponseEntity<InputStreamResource> getFileAsInputStreamResource(String name) throws FileNotFoundException {
-        File file = new File(ConstData.FILES_DIR + name);
+        File file = new File(RouteURLs.FILES_DIR + name);
         if (file.exists()) {
 
             HttpHeaders httpHeaders = new HttpHeaders();

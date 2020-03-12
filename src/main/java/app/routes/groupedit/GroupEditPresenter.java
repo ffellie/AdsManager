@@ -1,6 +1,6 @@
 package app.routes.groupedit;
 
-import app.data.Strings;
+import app.constants.Strings;
 import app.data.ad.Ad;
 import app.data.ad.AdService;
 import app.data.ad.MediaType;
@@ -8,8 +8,7 @@ import app.data.group.Group;
 import app.data.group.GroupService;
 import app.data.group.Promotion;
 import app.data.group.PromotionRepository;
-import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.ComponentEventListener;
+import app.routes.groupedit.components.PromotionEditDialog;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -28,13 +27,18 @@ public class GroupEditPresenter {
     private final PromotionRepository promotionRepository;
     private final AdService adService;
     private final GroupService groupService;
+    private final PromotionEditDialog promotionEditDialog;
     public  void view (GroupEditView view){
         this.view = view;
     }
 
     private void addGridColumns(){
         view.getPromotionGrid().addColumn(promotion -> {return adService.getAdById(promotion.getAdID());}).setHeader(Strings.NAME).setKey("name");
-        view.getPromotionGrid().addComponentColumn()
+        view.getPromotionGrid().addColumn("start").setHeader(Strings.PROMOTION_START_TIME);
+        view.getPromotionGrid().addColumn("end").setHeader(Strings.PROMOTION_END_TIME);
+        view.getPromotionGrid().addColumn("minutes").setHeader(Strings.PROMOTION_MINUTES);
+        view.getPromotionGrid().addColumn("duration").setHeader(Strings.PROMOTION_DURATION);
+        view.getPromotionGrid().addComponentColumn(this::createGridButtons).setHeader(Strings.ACTIONS).setKey("actions");
     };
 
     private HorizontalLayout createGridButtons (Promotion promotion){
@@ -73,7 +77,8 @@ public class GroupEditPresenter {
         });
         Button editPromotion = new Button(Strings.PLAYBACK_OPTIONS);
         editPromotion.addClickListener(buttonClickEvent -> {
-            Dialog dialog= new Dialog()
-        })
+            promotionEditDialog.open(promotion);
+        });
+        return new HorizontalLayout(viewButton,editPromotion,removeButton);
     }
 }

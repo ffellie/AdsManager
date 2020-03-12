@@ -1,10 +1,8 @@
 package app.routes.ads.components.edit;
 
 import app.components.media.ImageUpload;
-import app.components.media.MediaPreviewDialog;
-import app.data.Strings;
+import app.constants.Strings;
 import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;

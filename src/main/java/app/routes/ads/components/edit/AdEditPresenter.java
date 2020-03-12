@@ -1,7 +1,7 @@
 package app.routes.ads.components.edit;
 
-import app.ConstData;
-import app.data.Strings;
+import app.constants.RouteURLs;
+import app.constants.Strings;
 import app.data.ad.AdService;
 import app.routes.ads.AdsPageBinder;
 import app.components.media.ImageUpload;
@@ -93,7 +93,7 @@ public class AdEditPresenter {
     public boolean save (){
         if (validateInput()) {
             try {
-                File file = new File( ConstData.FILES_DIR + ad.getFilename());
+                File file = new File( RouteURLs.FILES_DIR + ad.getFilename());
                 OutputStream outputStream = new FileOutputStream(file);
                 outputStream.write(fileBytes);
 //                if (ad.getMediaType()==MediaType.Video){

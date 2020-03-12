@@ -1,10 +1,9 @@
 package app.routes.groups;
 
-import app.ConstData;
-import app.data.Strings;
+import app.constants.RouteURLs;
+import app.constants.Strings;
 import app.data.group.PromotionRepository;
 import app.data.user.UserRole;
-import app.routes.ads.AdsPageBinder;
 import app.data.group.Group;
 import app.data.group.GroupService;
 import app.data.user.User;
@@ -46,7 +45,7 @@ public class GroupsPresenter {
     private Button createSelectButton (Group g){
         Button selectButton = new Button(Strings.VIEW);
         selectButton.addClickListener(event ->{
-            UI.getCurrent().navigate(ConstData.GROUP_EDIT_ROUTE + g.getId());
+            UI.getCurrent().navigate(RouteURLs.GROUP_EDIT_ROUTE + g.getId());
         });
         return selectButton;
     }

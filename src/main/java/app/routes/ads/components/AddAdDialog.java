@@ -1,8 +1,7 @@
 package app.routes.ads.components;
 
-import app.data.Strings;
+import app.constants.Strings;
 import app.routes.ads.components.edit.AdEditView;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;

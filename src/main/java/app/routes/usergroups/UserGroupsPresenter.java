@@ -1,7 +1,7 @@
 package app.routes.usergroups;
 
 
-import app.data.Strings;
+import app.constants.Strings;
 import app.data.group.Group;
 import app.data.group.GroupService;
 import app.data.user.User;

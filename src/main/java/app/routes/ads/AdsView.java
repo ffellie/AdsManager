@@ -1,13 +1,11 @@
 package app.routes.ads;
 
 
-import app.data.Strings;
+import app.constants.Strings;
 import app.routes.ads.components.AddAdDialog;
 import app.routes.ads.components.edit.AdEditView;
 import app.routes.ads.components.list.AdsListView;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.spring.annotation.UIScope;
 import lombok.Getter;
