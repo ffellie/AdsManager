@@ -17,6 +17,7 @@ import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.provider.SortOrder;
 import com.vaadin.flow.spring.annotation.UIScope;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +31,7 @@ import java.util.stream.Stream;
 @Component
 @UIScope
 @RequiredArgsConstructor
+@Getter
 public class UserGroupsPresenter {
     private UserGroupsView view;
     private Group selectedGroup;
@@ -62,7 +64,7 @@ public class UserGroupsPresenter {
             yesButton.addClickListener(buttonClickEvent1 -> {
                         view.setEnabled(false);
                         groupService.removeUserFromGroup(selectedGroup,user);
-                        view.getUserGroupGrid().getDataProvider().refreshAll();
+                        view.getUserGrid().getDataProvider().refreshAll();
                         view.setEnabled(true);
                         dialog.close();
                     }

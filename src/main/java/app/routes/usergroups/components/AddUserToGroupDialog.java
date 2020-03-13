@@ -4,6 +4,8 @@ import app.data.group.Group;
 import app.data.group.GroupService;
 import app.data.user.User;
 import app.data.user.UserService;
+import app.routes.usergroups.UserGroupsPresenter;
+import app.routes.usergroups.UserGroupsView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
@@ -25,10 +27,12 @@ public class AddUserToGroupDialog extends Dialog {
     private Grid<User> userGrid;
     private Group group;
     private GroupService groupService;
-    public AddUserToGroupDialog (UserService service, GroupService groupService){
+    private UserGroupsPresenter userGroupsView;
+    public AddUserToGroupDialog (UserService service, GroupService groupService, UserGroupsPresenter userGroupsView){
         super();
         this.service=service;
         this.groupService = groupService;
+        this.userGroupsView = userGroupsView;
         userGrid = new Grid<>(User.class);
         userGrid.removeAllColumns();
         userGrid.addColumns("name","role");
@@ -58,8 +62,16 @@ public class AddUserToGroupDialog extends Dialog {
            groupService.saveGroup(group);
            this.setEnabled(true);
             userGrid.getDataProvider().refreshAll();
+
+
         });
         return button;
+    }
+
+    @Override
+    public void close (){
+        super.close();
+        userGroupsView.getView().getUserGrid().getDataProvider().refreshAll();
     }
 
     private void configureGridDataProvider (){

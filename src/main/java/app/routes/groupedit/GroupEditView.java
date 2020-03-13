@@ -13,23 +13,23 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-@Component
-@UIScope
-@Getter
-@Setter
-public class GroupEditView extends VerticalLayout {
-    private GroupEditPresenter presenter;
-    private Grid<Promotion> promotionGrid;
-    private Text caption = new Text("");
-    private Button addButton = new Button(Strings.ADD_PROMOTION), backButton = new Button(Strings.BACK);
-    private MediaPreviewDialog mediaPreviewDialog;
-    public GroupEditView(GroupEditPresenter presenter,MediaPreviewDialog mediaPreviewDialog){
-        this.presenter = presenter;
-        this.mediaPreviewDialog = mediaPreviewDialog;
-        presenter.view(this);
-        promotionGrid.removeAllColumns();
-        HorizontalLayout buttonsContainer = new HorizontalLayout(backButton,addButton);
-        add(caption,promotionGrid,buttonsContainer);
-    }
-
-}
+//@Component
+//@UIScope
+//@Getter
+//@Setter
+//public class GroupEditView extends VerticalLayout {
+//    private GroupEditPresenter presenter;
+//    private Grid<Promotion> promotionGrid;
+//    private Text caption = new Text("");
+//    private Button addButton = new Button(Strings.ADD_PROMOTION), backButton = new Button(Strings.BACK);
+//    private MediaPreviewDialog mediaPreviewDialog;
+//    public GroupEditView(GroupEditPresenter presenter,MediaPreviewDialog mediaPreviewDialog){
+//        this.presenter = presenter;
+//        this.mediaPreviewDialog = mediaPreviewDialog;
+//        presenter.view(this);
+//        promotionGrid.removeAllColumns();
+//        HorizontalLayout buttonsContainer = new HorizontalLayout(backButton,addButton);
+//        add(caption,promotionGrid,buttonsContainer);
+//    }
+//
+//}

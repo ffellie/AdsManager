@@ -18,67 +18,67 @@ import com.vaadin.flow.spring.annotation.UIScope;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
-@UIScope
-@RequiredArgsConstructor
-public class GroupEditPresenter {
-    private Group group;
-    private GroupEditView view;
-    private final PromotionRepository promotionRepository;
-    private final AdService adService;
-    private final GroupService groupService;
-    private final PromotionEditDialog promotionEditDialog;
-    public  void view (GroupEditView view){
-        this.view = view;
-    }
-
-    private void addGridColumns(){
-        view.getPromotionGrid().addColumn(promotion -> {return adService.getAdById(promotion.getAdID());}).setHeader(Strings.NAME).setKey("name");
-        view.getPromotionGrid().addColumn("start").setHeader(Strings.PROMOTION_START_TIME);
-        view.getPromotionGrid().addColumn("end").setHeader(Strings.PROMOTION_END_TIME);
-        view.getPromotionGrid().addColumn("minutes").setHeader(Strings.PROMOTION_MINUTES);
-        view.getPromotionGrid().addColumn("duration").setHeader(Strings.PROMOTION_DURATION);
-        view.getPromotionGrid().addComponentColumn(this::createGridButtons).setHeader(Strings.ACTIONS).setKey("actions");
-    };
-
-    private HorizontalLayout createGridButtons (Promotion promotion){
-        Ad ad = adService.getAdById(promotion.getAdID());
-        Button viewButton = new Button(Strings.VIEW);
-        viewButton.addClickListener(event ->{
-            if (ad.getMediaType()== MediaType.Picture) {
-                view.getMediaPreviewDialog().updatePoster(ad.getFilename());
-                view.getMediaPreviewDialog().toggleImage();
-            }
-            else {
-                view.getMediaPreviewDialog().updateVideo(ad.getFilename());
-                view.getMediaPreviewDialog().toggleVideo();
-            }
-            view.getMediaPreviewDialog().open();
-        });
-        Button removeButton = new Button();
-        removeButton.addClickListener(buttonClickEvent -> {
-            Dialog dialog = new Dialog();
-            Text text = new Text(Strings.ARE_U_SURE_PROMOTION);
-            Button cancelButton = new Button(Strings.CANCEL), yesButton = new Button(Strings.YES);
-            cancelButton.addClickListener(buttonClickEvent1 -> dialog.close());
-            yesButton.addClickListener(buttonClickEvent1 -> {
-                        view.setEnabled(false);
-                        group.getPromotions().remove(promotion);
-                        groupService.saveGroup(group);
-                        view.getPromotionGrid().getDataProvider().refreshAll();
-                        view.setEnabled(true);
-                        dialog.close();
-                    }
-            );
-            dialog.add(new VerticalLayout(text,new HorizontalLayout(cancelButton,yesButton)));
-            dialog.setWidth("400px");
-            dialog.setHeight("100px");
-            dialog.open();
-        });
-        Button editPromotion = new Button(Strings.PLAYBACK_OPTIONS);
-        editPromotion.addClickListener(buttonClickEvent -> {
-            promotionEditDialog.open(promotion);
-        });
-        return new HorizontalLayout(viewButton,editPromotion,removeButton);
-    }
-}
+//@Component
+//@UIScope
+//@RequiredArgsConstructor
+//public class GroupEditPresenter {
+//    private Group group;
+//    private GroupEditView view;
+//    private final PromotionRepository promotionRepository;
+//    private final AdService adService;
+//    private final GroupService groupService;
+//    private final PromotionEditDialog promotionEditDialog;
+//    public  void view (GroupEditView view){
+//        this.view = view;
+//    }
+//
+//    private void addGridColumns(){
+//        view.getPromotionGrid().addColumn(promotion -> {return adService.getAdById(promotion.getAdID());}).setHeader(Strings.NAME).setKey("name");
+//        view.getPromotionGrid().addColumn("start").setHeader(Strings.PROMOTION_START_TIME);
+//        view.getPromotionGrid().addColumn("end").setHeader(Strings.PROMOTION_END_TIME);
+//        view.getPromotionGrid().addColumn("minutes").setHeader(Strings.PROMOTION_MINUTES);
+//        view.getPromotionGrid().addColumn("duration").setHeader(Strings.PROMOTION_DURATION);
+//        view.getPromotionGrid().addComponentColumn(this::createGridButtons).setHeader(Strings.ACTIONS).setKey("actions");
+//    };
+//
+//    private HorizontalLayout createGridButtons (Promotion promotion){
+//        Ad ad = adService.getAdById(promotion.getAdID());
+//        Button viewButton = new Button(Strings.VIEW);
+//        viewButton.addClickListener(event ->{
+//            if (ad.getMediaType()== MediaType.Picture) {
+//                view.getMediaPreviewDialog().updatePoster(ad.getFilename());
+//                view.getMediaPreviewDialog().toggleImage();
+//            }
+//            else {
+//                view.getMediaPreviewDialog().updateVideo(ad.getFilename());
+//                view.getMediaPreviewDialog().toggleVideo();
+//            }
+//            view.getMediaPreviewDialog().open();
+//        });
+//        Button removeButton = new Button();
+//        removeButton.addClickListener(buttonClickEvent -> {
+//            Dialog dialog = new Dialog();
+//            Text text = new Text(Strings.ARE_U_SURE_PROMOTION);
+//            Button cancelButton = new Button(Strings.CANCEL), yesButton = new Button(Strings.YES);
+//            cancelButton.addClickListener(buttonClickEvent1 -> dialog.close());
+//            yesButton.addClickListener(buttonClickEvent1 -> {
+//                        view.setEnabled(false);
+//                        group.getPromotions().remove(promotion);
+//                        groupService.saveGroup(group);
+//                        view.getPromotionGrid().getDataProvider().refreshAll();
+//                        view.setEnabled(true);
+//                        dialog.close();
+//                    }
+//            );
+//            dialog.add(new VerticalLayout(text,new HorizontalLayout(cancelButton,yesButton)));
+//            dialog.setWidth("400px");
+//            dialog.setHeight("100px");
+//            dialog.open();
+//        });
+//        Button editPromotion = new Button(Strings.PLAYBACK_OPTIONS);
+//        editPromotion.addClickListener(buttonClickEvent -> {
+//            promotionEditDialog.open(promotion);
+//        });
+//        return new HorizontalLayout(viewButton,editPromotion,removeButton);
+//    }
+//}
