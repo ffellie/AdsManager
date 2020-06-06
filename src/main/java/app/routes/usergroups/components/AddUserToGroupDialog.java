@@ -5,7 +5,6 @@ import app.data.group.GroupService;
 import app.data.user.User;
 import app.data.user.UserService;
 import app.routes.usergroups.UserGroupsPresenter;
-import app.routes.usergroups.UserGroupsView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
@@ -24,18 +23,23 @@ import java.util.stream.Stream;
 @UIScope
 public class AddUserToGroupDialog extends Dialog {
     private UserService service;
+
     private Grid<User> userGrid;
+
     private Group group;
+
     private GroupService groupService;
+
     private UserGroupsPresenter userGroupsView;
-    public AddUserToGroupDialog (UserService service, GroupService groupService, UserGroupsPresenter userGroupsView){
+
+    public AddUserToGroupDialog(UserService service, GroupService groupService, UserGroupsPresenter userGroupsView) {
         super();
-        this.service=service;
+        this.service = service;
         this.groupService = groupService;
         this.userGroupsView = userGroupsView;
         userGrid = new Grid<>(User.class);
         userGrid.removeAllColumns();
-        userGrid.addColumns("name","role");
+        userGrid.addColumns("name", "role");
         userGrid.addComponentColumn(this::createAddButton);
         add(userGrid);
         setSizeFull();
@@ -43,6 +47,7 @@ public class AddUserToGroupDialog extends Dialog {
         userGrid.setHeight("600px");
         configureGridDataProvider();
     }
+
     public void open(Group group) {
         super.open();
         this.group = group;
@@ -52,33 +57,30 @@ public class AddUserToGroupDialog extends Dialog {
     }
 
 
-
-    private Button createAddButton (User user){
+    private Button createAddButton(User user) {
         Button button = new Button("Добавить");
         button.addClickListener(buttonClickEvent -> {
-           this.setEnabled(false);
-           group.getUserIDs().add(user.getId());
-           userGrid.getDataProvider().refreshAll();
-           groupService.saveGroup(group);
-           this.setEnabled(true);
+            this.setEnabled(false);
+
+            groupService.addUserToGroup(group.getId(), user.getId());
+
             userGrid.getDataProvider().refreshAll();
-
-
+            this.setEnabled(true);
         });
         return button;
     }
 
     @Override
-    public void close (){
+    public void close() {
         super.close();
         userGroupsView.getView().getUserGrid().getDataProvider().refreshAll();
     }
 
-    private void configureGridDataProvider (){
+    private void configureGridDataProvider() {
         DataProvider dataProvider = DataProvider.fromCallbacks(
                 this::fetchUsers,
                 query -> {
-                    if (group==null){
+                    if (group == null) {
                         return 0;
                     }
                     return service.countByGroupNotIn(group);
@@ -88,7 +90,7 @@ public class AddUserToGroupDialog extends Dialog {
     }
 
     private Stream fetchUsers(Query<Group, ?> query) {
-        if (group==null) {
+        if (group == null) {
             return new ArrayList<Group>().stream();
         }
         int offset = query.getOffset();
@@ -98,7 +100,7 @@ public class AddUserToGroupDialog extends Dialog {
                         sort -> sort.getSorted(),
                         sort -> sort.getDirection() == SortDirection.ASCENDING));
 
-        System.out.println(service.findAllByGroupNotIn(offset,limit,group,sortOrder).size());
-        return service.findAllByGroupNotIn(offset,limit,group,sortOrder).stream();
+        System.out.println(service.findAllByGroupNotIn(offset, limit, group, sortOrder).size());
+        return service.findAllByGroupNotIn(offset, limit, group, sortOrder).stream();
     }
 }

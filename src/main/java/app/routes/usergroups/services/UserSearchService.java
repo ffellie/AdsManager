@@ -1,8 +1,6 @@
 package app.routes.usergroups.services;
 
 import app.components.search.SearchService;
-import app.data.group.Group;
-import app.data.group.GroupService;
 import app.data.user.User;
 import app.data.user.UserService;
 import lombok.AllArgsConstructor;

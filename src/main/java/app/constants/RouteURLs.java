@@ -8,7 +8,7 @@ public class RouteURLs {
             GROUPS_ROUTE="groups/",
             ADMIN_ROUTE="admin/",
             USER_GROUPS_ROUTE="usergroups/",
-            GROUP_EDIT_ROUTE="groups-edit/";
+            GROUP_EDIT_ROUTE="group-edit/";
 
     private RouteURLs(){}
 }

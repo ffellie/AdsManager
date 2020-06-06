@@ -27,14 +27,21 @@ public class Strings {
             NUM_OF_ADS = "Кол-во рекламы",
             BACK = "Назад",
             ADD_PROMOTION = "Добавить рекламу",
-            TO = "С",
-            FROM = "По",
+            TO = "По",
+            FROM = "С",
             TIME_ERROR = "Время начала не может быть меньше времение конца",
             DURATION = "Длительность (сек.)",
             PLAYBACK_TIME = "Время проигрывания (мин. в час)",
             PLAYBACK_OPTIONS = "Настройка воспроизведения",
-            PROMOTION_SAVED = "Playback settings saved",
-            PROMOTION_NOT_SAVED = "Playback settings were not saved";
+            PROMOTION_SAVED = "Конфигурация рекламы сохранена",
+            PROMOTION_NOT_SAVED = "Не удалось сохранить настройки рекламы",
+            PROMOTION_START_TIME="Начало воспроизведения",
+            PROMOTION_END_TIME="Конец воспроизведения",
+            PROMOTION_MINUTES="Часов в минуту",
+            PROMOTION_DURATION="Длительность ролика",
+            AD_NOT_SELECTED="Не выбран файл для воспроизведения",
+            AD="Файл",
+            CHOOSE_AD="Выбрать файл";
 
     private Strings(){}
 }

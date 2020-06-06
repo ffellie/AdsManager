@@ -1,9 +1,6 @@
 package app.routes.ads;
 
-import app.components.media.MediaPreviewDialog;
 import app.data.ad.Ad;
-import app.data.group.Group;
-import app.data.group.GroupService;
 import com.vaadin.flow.spring.annotation.UIScope;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -27,8 +24,6 @@ public class AdsPresenter implements AdsPageBinder {
     public void onAdChangedOrCreated (){
         view.getAdsListView().getPresenter().refreshGrid();
     }
-
-
 
     public void onAddGroup (){
         view.getAdsListView().getPresenter().getView().getAdGrid().asMultiSelect().setEnabled(false);

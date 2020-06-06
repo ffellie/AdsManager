@@ -3,7 +3,6 @@ package app.components.media;
 import com.vaadin.flow.component.upload.Receiver;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.UploadI18N;
-import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

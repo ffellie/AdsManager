@@ -12,14 +12,15 @@ import org.springframework.stereotype.Component;
 @Component
 @UIScope
 @Getter
-public class PromotionPlaybackView  extends VerticalLayout {
+public class PromotionPlaybackView extends VerticalLayout {
     private PromotionPlaybackPresenter presenter;
     private TimePicker startTimePicker;
     private TimePicker endTimePicker;
-//    private DatePicker startDatePicker;
+    //    private DatePicker startDatePicker;
 //    private DatePicker endDatePicker;
     private NumberField durationField, playbackTimeField;
-    public PromotionPlaybackView (PromotionPlaybackPresenter presenter){
+
+    public PromotionPlaybackView(PromotionPlaybackPresenter presenter) {
         this.presenter = presenter;
         startTimePicker = new TimePicker(Strings.FROM);
         endTimePicker = new TimePicker(Strings.TO);
@@ -30,7 +31,7 @@ public class PromotionPlaybackView  extends VerticalLayout {
         durationField.setMax(300);
         playbackTimeField.setMin(0);
         playbackTimeField.setMax(60);
-        FormLayout form = new FormLayout(startTimePicker,endTimePicker,durationField,playbackTimeField);
+        FormLayout form = new FormLayout(startTimePicker, endTimePicker, durationField, playbackTimeField);
         add(form);
         presenter.view(this);
     }

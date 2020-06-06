@@ -1,14 +1,14 @@
 package app.routes.ads.components.edit;
 
+import app.components.media.ImageUpload;
 import app.constants.RouteURLs;
 import app.constants.Strings;
-import app.data.ad.AdService;
-import app.routes.ads.AdsPageBinder;
-import app.components.media.ImageUpload;
 import app.data.ad.Ad;
+import app.data.ad.AdServiceImpl;
 import app.data.ad.MediaType;
 import app.data.user.User;
 import app.data.user.UserService;
+import app.routes.ads.AdsPageBinder;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.data.binder.Binder;
@@ -19,7 +19,10 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.UUID;
 
 @Component
@@ -27,7 +30,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 //@Validated
 public class AdEditPresenter {
-    private final AdService service;
+    private final AdServiceImpl service;
     private final UserService userService;
     private final AdsPageBinder parentPresenter;
     private MemoryBuffer receiver= new MemoryBuffer();

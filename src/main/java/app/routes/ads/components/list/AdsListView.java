@@ -20,6 +20,7 @@ public class AdsListView extends VerticalLayout {
     private Search search;
     private Text header;
     private MediaPreviewDialog mediaPreviewDialog;
+
     public AdsListView(AdsListPresenter presenter, AdSearchService adSearchService, MediaPreviewDialog mediaPreviewDialog) {
         this.presenter = presenter;
         this.mediaPreviewDialog = mediaPreviewDialog;

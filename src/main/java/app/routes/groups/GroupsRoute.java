@@ -16,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @UIScope
 @Getter
 @Setter
-public class GroupsRoute extends VerticalLayout implements BeforeEnterObserver, AfterNavigationObserver {
+public class GroupsRoute extends VerticalLayout implements  AfterNavigationObserver {
     private GroupsView view;
     public GroupsRoute (GroupsView view){
         super(view);
@@ -24,18 +24,7 @@ public class GroupsRoute extends VerticalLayout implements BeforeEnterObserver, 
         this.view = view;
     }
 
-    @Override
-    public void beforeEnter(BeforeEnterEvent event){
-        if ((SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)){
-            event.rerouteTo(RouteURLs.LOGIN_ROUTE);
-        }
-        else {
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (user.getRole() != UserRole.ADMIN) {
-                event.forwardTo("");
-            }
-        }
-    }
+
 
     @Override
     public void afterNavigation(AfterNavigationEvent event){

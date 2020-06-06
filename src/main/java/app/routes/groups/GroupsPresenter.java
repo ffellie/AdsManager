@@ -2,11 +2,11 @@ package app.routes.groups;
 
 import app.constants.RouteURLs;
 import app.constants.Strings;
-import app.data.group.PromotionRepository;
-import app.data.user.UserRole;
 import app.data.group.Group;
 import app.data.group.GroupService;
+import app.data.promotion.PromotionRepository;
 import app.data.user.User;
+import app.data.user.UserRole;
 import app.data.user.UserService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -17,7 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -36,7 +37,9 @@ public class GroupsPresenter {
     }
 
     private void addColumns (){
-        view.getGroupsGrid().addColumn(promotionRepository::countAllByGroup).setHeader(Strings.NUM_OF_ADS).setKey("ads-num");
+        view.getGroupsGrid().addColumn(group -> promotionRepository.countAllByGroupId(group.getId()))
+                .setHeader(Strings.NUM_OF_ADS)
+                .setKey("ads-num");
         addActionButtons();
     }
     private void addActionButtons (){
@@ -67,19 +70,34 @@ public class GroupsPresenter {
                                         sort -> sort.getSorted(),
                                         sort -> sort.getDirection() == SortDirection.ASCENDING));
 
-                        List<Group> persons = service
-                                .findAll(offset, limit, sortOrder);
+                        app.security.User secUser = (app.security.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                        if (secUser == null) {
+                            UI.getCurrent().navigate("login");
+                        }
+                        User user = userService.getUserByName(secUser.getName());
 
-                        return persons.stream();
+                        return service.findAll(offset, limit, sortOrder, service.getGroupByUser(user.getId())
+                                .stream()
+                                .map(Group::getId)
+                                .collect(Collectors.toList()))
+                                .stream();
                     },
-                    query -> service.count());
+                    query -> {
+                        app.security.User secUser = (app.security.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                        if (secUser == null) {
+                            UI.getCurrent().navigate("login");
+                        }
+                        User user = userService.getUserByName(secUser.getName());
+
+                        return service.count(service.getGroupByUser(user.getId()).stream()
+                                .map(Group::getId)
+                                .collect(Collectors.toList()));
+                    });
             dataProvider.refreshAll();
             view.getGroupsGrid().setDataProvider(dataProvider);
         }
         else {
-            List<Long> id = new ArrayList<>();
-            id.add(user.getId());
-            view.getGroupsGrid().setItems(service.findDistinctByUserIDsIn(id));
+            view.getGroupsGrid().setItems(service.getGroupByUser(user.getId()));
         }
     }
 }

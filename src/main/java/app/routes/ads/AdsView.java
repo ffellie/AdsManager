@@ -13,7 +13,6 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 
-
 @UIScope
 @Component
 @Getter
@@ -24,7 +23,8 @@ public class AdsView extends VerticalLayout {
     private AdsListView adsListView;
     private AddAdDialog addAdDialog;
     private Button addAdButton = new Button(Strings.ADD_NEW_FILE);
-    public AdsView(AdsPresenter presenter, AdsListView adsListView, AdEditView adEditView, AddAdDialog addAdDialog){
+
+    public AdsView(AdsPresenter presenter, AdsListView adsListView, AdEditView adEditView, AddAdDialog addAdDialog) {
         this.presenter = presenter;
         this.adEditView = adEditView;
         this.adsListView = adsListView;
@@ -33,7 +33,8 @@ public class AdsView extends VerticalLayout {
         add(adsListView, addAdButton);
         configureComponentsPlacementAndSize();
     }
-    private void configureComponentsPlacementAndSize(){
+
+    private void configureComponentsPlacementAndSize() {
         setAlignItems(Alignment.CENTER);
         adsListView.setWidth("50%");
         adsListView.setMaxWidth("800px");

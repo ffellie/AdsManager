@@ -1,10 +1,13 @@
 package app.routes.ads.components.list;
 
-import app.data.ad.AdService;
-import app.data.ad.MediaType;
-import app.routes.ads.AdsPageBinder;
 import app.constants.Strings;
 import app.data.ad.Ad;
+import app.data.ad.AdServiceImpl;
+import app.data.ad.MediaType;
+import app.data.user.User;
+import app.data.user.UserService;
+import app.routes.ads.AdsPageBinder;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -16,6 +19,7 @@ import com.vaadin.flow.spring.annotation.UIScope;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,11 +32,15 @@ import java.util.stream.Collectors;
 @Setter
 @RequiredArgsConstructor
 public class AdsListPresenter {
-    private final AdService service;
+    private final AdServiceImpl service;
+
+    private final UserService userService;
+
     private AdsPageBinder parentPresenter;
     private DataProvider<Ad,Void> dataProvider;
     private AdsListView view;
     private boolean lock;
+
     public void view (AdsListView view){
         this.view=view;
         configureGridData();
@@ -105,12 +113,26 @@ public class AdsListPresenter {
                                     sort -> sort.getSorted(),
                                     sort -> sort.getDirection() == SortDirection.ASCENDING));
 
-                    List<Ad> persons = service
-                            .findAll(offset, limit, sortOrder);
+                    app.security.User secUser = (app.security.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                    if (secUser == null) {
+                        UI.getCurrent().navigate("login");
+                    }
 
-                    return persons.stream();
+                    User user = userService.getUserByName(secUser.getName());
+
+                    return service.findAll(offset, limit, sortOrder, user)
+                            .stream();
                 },
-                query -> service.count());
+                query -> {
+                    app.security.User secUser = (app.security.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                    if (secUser == null) {
+                        UI.getCurrent().navigate("login");
+                    }
+
+                    User user = userService.getUserByName(secUser.getName());
+
+                    return service.count(user);
+                });
         dataProvider.refreshAll();
         view.getAdGrid().setDataProvider(dataProvider);
     }
