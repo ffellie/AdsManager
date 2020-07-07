@@ -1,11 +1,11 @@
 package app.routes.ads;
 
 
-import app.components.ads.edit.AdEditView;
-import app.components.ads.list.AdsListView;
-import app.components.groups.GroupsView;
+import app.constants.Strings;
+import app.routes.ads.components.AddAdDialog;
+import app.routes.ads.components.edit.AdEditView;
+import app.routes.ads.components.list.AdsListView;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.spring.annotation.UIScope;
 import lombok.Getter;
@@ -17,21 +17,27 @@ import org.springframework.stereotype.Component;
 @Component
 @Getter
 @Setter
-public class AdsView extends HorizontalLayout  {
+public class AdsView extends VerticalLayout {
     private AdsPresenter presenter;
     private AdEditView adEditView;
     private AdsListView adsListView;
-    private GroupsView groupsView;
-    private Button saveChangesButton;
-    public AdsView(AdsPresenter presenter, AdsListView adsListView, AdEditView adEditView, GroupsView groupsView){
+    private AddAdDialog addAdDialog;
+    private Button addAdButton = new Button(Strings.ADD_NEW_FILE);
+
+    public AdsView(AdsPresenter presenter, AdsListView adsListView, AdEditView adEditView, AddAdDialog addAdDialog) {
         this.presenter = presenter;
         this.adEditView = adEditView;
         this.adsListView = adsListView;
-        this.groupsView = groupsView;
-        saveChangesButton = new Button("Сохранить изменения");
+        this.addAdDialog = addAdDialog;
         presenter.view(this);
-        add(groupsView);
-        add(new VerticalLayout(saveChangesButton,adsListView));
-        add(adEditView);
+        add(adsListView, addAdButton);
+        configureComponentsPlacementAndSize();
+    }
+
+    private void configureComponentsPlacementAndSize() {
+        setAlignItems(Alignment.CENTER);
+        adsListView.setWidth("50%");
+        adsListView.setMaxWidth("800px");
+        adsListView.setMinWidth("400px");
     }
 }

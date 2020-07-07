@@ -1,9 +1,9 @@
 package app.data.user;
 
 import app.data.ad.Ad;
-import app.data.group.Group;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +15,8 @@ import java.util.List;
 public class User{
     @Id
     @GeneratedValue
-    private long id;
-    @Column (nullable = false)
+    private Long id;
+    @Column (nullable = false, unique = true)
     private String name;
     @Column
     private String password;

@@ -14,7 +14,6 @@ import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -87,7 +86,7 @@ public class AdminPresenter {
         Button deleteButton = new Button("Удалить", clickEvent ->{
             Dialog deleteDialog = new Dialog();
             Button confirmButton = new Button("Да", event -> {
-                view.getUserRepository().delete(user);
+                service.removeUser(user);
                 view.getUserGrid().setDataProvider(dataProvider);
                 deleteDialog.close();
             });

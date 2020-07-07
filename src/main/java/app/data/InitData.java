@@ -11,17 +11,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class InitData implements ApplicationRunner {
     private UserRepository userDAO;
+
     @Override
-    public void run (ApplicationArguments args){
+    public void run(ApplicationArguments args) {
         User admin = new User();
         admin.setName("admin");
         admin.setPassword("admin");
         admin.setRole(UserRole.ADMIN);
-        userDAO.save(admin);
+        if (!userDAO.findByName(admin.getName()).isPresent())
+            userDAO.save(admin);
     }
 
     @Autowired
-    public InitData (UserRepository userDAO){
-        this.userDAO=userDAO;
+    public InitData(UserRepository userDAO) {
+        this.userDAO = userDAO;
     }
 }

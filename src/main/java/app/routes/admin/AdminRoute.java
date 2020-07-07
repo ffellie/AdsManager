@@ -1,14 +1,12 @@
 package app.routes.admin;
 
+import app.constants.RouteURLs;
 import app.data.user.UserRole;
 import app.routes.MainLayout;
 import app.security.User;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.UIScope;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.theme.lumo.Lumo;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -28,7 +26,7 @@ public class AdminRoute extends VerticalLayout implements BeforeEnterObserver, A
     @Override
     public void beforeEnter(BeforeEnterEvent event){
         if ((SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)){
-            event.rerouteTo("login");
+            event.rerouteTo(RouteURLs.LOGIN_ROUTE);
         }
         else {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

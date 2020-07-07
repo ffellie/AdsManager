@@ -10,9 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
@@ -45,8 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers( "/", "/login", "/VAADIN/**", "/HEARTBEAT/**", "/UIDL/**", "/resources/**", "/frontend/**", "/h2-console/**", "docprint").permitAll()
-//                .anyRequest().authenticated()
+                .antMatchers( "/", "/login", "/VAADIN/**", "/HEARTBEAT/**", "/UIDL/**", "/resources/**", "/frontend/**", "/h2-console/**", "docprint","api").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .logout()
                 .permitAll()
@@ -56,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sameOrigin()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/main").authenticated()
+//                .antMatchers("/main").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
